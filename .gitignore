@@ -31,4 +31,7 @@ proguard/
   
 # Others  
 .idea/  
-*.iml  
+*.iml 
+
+# package file
+/target/ 
