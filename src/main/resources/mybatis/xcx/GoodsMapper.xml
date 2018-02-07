@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.xcx.dao.GoodsDao">
+
+	<select id="get" resultType="com.bootdo.xcx.domain.GoodsDO">
+		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand`,`brand_uuid`,`series_uuid`from goods where uuid = #{value}
+	</select>
+	<select id="getByUUID" resultType="com.bootdo.xcx.domain.GoodsDO">
+		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand`,`brand_uuid`,`series_uuid` from goods where uuid = #{uuid}
+	</select>
+
+	<select id="list" resultType="com.bootdo.xcx.domain.GoodsDO">
+		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand`,`brand_uuid`,`series_uuid` from goods
+        <where>  
+			<if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+			<if test="type != null and type != ''"> and type = #{type} </if>
+			<if test="cname != null and cname != ''"> and CName like CONCAT('%',#{cname},'%') </if>
+			<if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
+			<if test="seriesUuid != null and seriesUuid != ''"> and series_uuid = #{seriesUuid} </if>
+		</where>
+
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+
+	</select>
+
+
+	<!--模糊搜索所有商品-->
+	<select id="searchGoods" resultType="com.bootdo.xcx.domain.GoodsDO">
+		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand` from goods
+		 WHERE CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
+		order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	
+ 	<select id="countSearch" resultType="int">
+		select count(*) from goods
+		WHERE CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from goods
+		 <where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+		  		<!--  <if test="cname != null and cname != ''"> and CName = #{cname} </if>-->
+			 		<if test="cname != null and cname != ''"> and CName like CONCAT('%',#{cname},'%') </if>
+		  		  <if test="ename != null and ename != ''"> and EName = #{ename} </if>
+		  		  <if test="price != null and price != ''"> and price = #{price} </if>
+		  		  <if test="number != null and number != ''"> and number = #{number} </if>
+		  		  <if test="quality != null and quality != ''"> and quality = #{quality} </if>
+		  		  <if test="material != null and material != ''"> and material = #{material} </if>
+		  		  <if test="describe != null and describe != ''"> and describe = #{describe} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="series != null and series != ''"> and series = #{series} </if>
+		  		  <if test="characteristic != null and characteristic != ''"> and characteristic = #{characteristic} </if>
+		  		  <if test="market != null and market != ''"> and market = #{market} </if>
+		  		  <if test="colour != null and colour != ''"> and colour = #{colour} </if>
+		  		  <if test="others != null and others != ''"> and others = #{others} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
+		  		  <if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate} </if>
+		  		  <if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+				 <if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
+			 <if test="seriesUuid != null and seriesUuid != ''"> and series_uuid = #{seriesUuid} </if>
+			 <if test="imgurl != null and imgurl != ''"> and imgUrl = #{imgurl} </if>
+			 <if test="brand != null and brand != ''"> and brand = #{brand} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.xcx.domain.GoodsDO" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="uuid" resultType="String" order="BEFORE">
+			select  replace(uuid(),'-','')   from dual
+		</selectKey>
+		insert into goods
+		(
+			`uuid`, 
+			`CName`, 
+			`EName`, 
+			`price`, 
+			`number`, 
+			`quality`, 
+			`material`, 
+			`describe`, 
+			`type`, 
+			`series`, 
+			`characteristic`, 
+			`market`, 
+			`colour`, 
+			`others`, 
+			`created`, 
+			`modified`, 
+			`gtm_create`, 
+			`gtm_modified`,
+		`status`,
+		`imgUrl`,
+		`brand`,
+		`brand_uuid`,
+		`series_uuid`
+		)
+		values
+		(
+			#{uuid}, 
+			#{cname}, 
+			#{ename}, 
+			#{price}, 
+			#{number}, 
+			#{quality}, 
+			#{material}, 
+			#{describe}, 
+			#{type}, 
+			#{series}, 
+			#{characteristic}, 
+			#{market}, 
+			#{colour}, 
+			#{others}, 
+			#{created}, 
+			#{modified}, 
+			#{gtmCreate}, 
+			#{gtmModified},
+		#{status},
+		#{imgurl},
+		#{brand},
+		#{brandUuid},
+		#{seriesUuid}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.xcx.domain.GoodsDO">
+		update goods 
+		<set>
+			<if test="cname != null">`CName` = #{cname}, </if>
+			<if test="ename != null">`EName` = #{ename}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="number != null">`number` = #{number}, </if>
+			<if test="quality != null">`quality` = #{quality}, </if>
+			<if test="material != null">`material` = #{material}, </if>
+			<if test="describe != null">`describe` = #{describe}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="series != null">`series` = #{series}, </if>
+			<if test="characteristic != null">`characteristic` = #{characteristic}, </if>
+			<if test="market != null">`market` = #{market}, </if>
+			<if test="colour != null">`colour` = #{colour}, </if>
+			<if test="others != null">`others` = #{others}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="modified != null">`modified` = #{modified}, </if>
+			<if test="gtmCreate != null">`gtm_create` = #{gtmCreate}, </if>
+			<if test="gtmModified != null">`gtm_modified` = #{gtmModified}, </if>
+			<if test="status != null">`status` = #{status}</if>
+			<if test="imgurl != null">`imgUrl` = #{imgurl}</if>
+			<if test="brand != null">`brand` = #{brand}</if>
+			<if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
+			<if test="seriesUuid != null and seriesUuid != ''"> and series_uuid = #{seriesUuid} </if>
+		</set>
+		where uuid = #{uuid}
+	</update>
+
+	<update id="updateStatus">
+		update goods SET status = '0'
+		where uuid = #{uuid}
+	</update>
+
+	<update id="batchUpdateStatus">
+		update goods SET status = '0' where uuid in
+		<foreach item="uuid" collection="array" open="(" separator="," close=")">
+			#{uuid}
+		</foreach>
+	</update>
+	
+	<delete id="remove">
+		delete from goods where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from goods where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
