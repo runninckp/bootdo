@@ -62,7 +62,7 @@ public class OpenApiController  extends BaseController {
     }
 
     /**
-     *:2：通过商品的id获取商品详细信息
+     *:2：通过品牌的id获取品牌详细信息
      * @param id
      * @return
      * 完成
@@ -107,13 +107,21 @@ public class OpenApiController  extends BaseController {
     @PostMapping("/goods/choiceGoods")
     public R choiceGoods(@RequestParam Map<String, Object> params){
         //查询列表数据
+        if(params==null){
+            return R.error();
+        }
         List<GoodsDO> goodsList = goodsService.list(params);
         HashMap hashMap = new HashMap();
-        if(StringUtils.isNotEmpty(params.get("brandUuid").toString())&&
-                StringUtils.isEmpty(params.get("type").toString())&&
-                StringUtils.isEmpty(params.get("uuid").toString())&&
-                StringUtils.isEmpty(params.get("seriesUuid").toString())){
-            List<SeriesDO> series = seriesService.getSeriesByBrandUuid(params.get("brandUuid").toString());
+        if(params.get("brandUuid")!=null){
+            List<SeriesDO> series = new ArrayList<>();
+            boolean a = params.get("seriesUuid")==null;
+            if ( params.get("seriesUuid")==null){
+                series = seriesService.getSeriesByBrandUuid(params.get("brandUuid").toString());
+            }else {
+                SeriesDO seriesDO = seriesService.getByUUID(params.get("seriesUuid").toString());
+                series.add(seriesDO);
+            }
+
           for(SeriesDO seriesDO:series){
               seriesDO.setGoodList(new ArrayList<>());
               for(GoodsDO goodsDO:goodsList){
@@ -168,7 +176,10 @@ public class OpenApiController  extends BaseController {
         }
         List<BrandDO> goodsList = brandService.queryBrand(params);
         Map Map =Sort.sortBrand(goodsList,params.get("sort").toString());
-        return R.ok(Map);
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("data",Map);
+        return R.ok(hashMap);
     }
 
 }

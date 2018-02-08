@@ -7,6 +7,10 @@
 		select `id`,`uuid`,`brand_id`,`cname`,`ename`,`img`,`describe`,`remark`,`modified`,`gtm_create`,`gtm_modified`,`status`,`created` from series where id = #{value}
 	</select>
 
+<select id="getByUUID" resultType="com.bootdo.xcx.domain.SeriesDO">
+		select `id`,`uuid`,`brand_id`,`cname`,`ename`,`img`,`describe`,`remark`,`modified`,`gtm_create`,`gtm_modified`,`status`,`created` from series where uuid = #{value}
+	</select>
+
 	<select id="list" resultType="com.bootdo.xcx.domain.SeriesDO">
 		select `id`,`uuid`,`brand_id`,`cname`,`ename`,`img`,`describe`,`remark`,`modified`,`gtm_create`,`gtm_modified`,`status`,`created` from series
         <where>  

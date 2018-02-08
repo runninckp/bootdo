@@ -35,7 +35,7 @@ import java.util.List;
 import static org.activiti.editor.constants.ModelDataJsonConstants.*;
 
 /**
- * @author bootdo 1992lcg@163.com
+ * @author bootdo 756495742@qq.com
  */
 @RequestMapping("/activiti")
 @RestController

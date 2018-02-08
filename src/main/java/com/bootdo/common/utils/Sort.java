@@ -179,13 +179,14 @@ public class Sort {
             for(int i=0;i<list.size();i++){//为了排序都返回大写字母
                 String cname = StringUtils.isNotEmpty(list.get(i).getCname().toString())?list.get(i).getCname().toString():list.get(i).getEname().toString();
                 String ename = StringUtils.isNotEmpty(list.get(i).getEname().toString())?list.get(i).getEname().toString():list.get(i).getCname().toString();
-                if(type.equals("Cname")&&a.equals(String2AlphaFirst(cname,"b"))){
+                //1：根据中文，2：根据英文
+                if(type.equals("1")&&a.equals(String2AlphaFirst(cname,"b"))){
                     arraylist.add(list.get(i));
                 }
-                if(type.equals("Ename")&&a.equals(String2AlphaFirst(ename,"b"))){
+                if(type.equals("2")&&a.equals(String2AlphaFirst(ename,"b"))){
                     arraylist.add(list.get(i));
                 }
-                if(!type.equals("Cname")&&!type.equals("Ename")&&a.equals(String2AlphaFirst(ename,"b"))){
+                if(!type.equals("1")&&!type.equals("2")&&a.equals(String2AlphaFirst(ename,"b"))){
                     arraylist.add(list.get(i));
                 }
             }

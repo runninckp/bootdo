@@ -17,6 +17,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SeriesDao {
 
 	SeriesDO get(Long id);
+
+	SeriesDO getByUUID(String id);
 	
 	List<SeriesDO> list(Map<String,Object> map);
 

@@ -15,7 +15,9 @@ import java.util.Map;
 public interface SeriesService {
 	
 	SeriesDO get(Long id);
-	
+
+	SeriesDO getByUUID(String id);
+
 	List<SeriesDO> list(Map<String, Object> map);
 
 	List<SeriesDO> getSeriesByBrandUuid(String brandUuid);

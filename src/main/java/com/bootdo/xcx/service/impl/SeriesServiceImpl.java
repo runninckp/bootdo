@@ -21,6 +21,11 @@ public class SeriesServiceImpl implements SeriesService {
 	public SeriesDO get(Long id){
 		return seriesDao.get(id);
 	}
+
+	@Override
+	public SeriesDO getByUUID(String id){
+		return seriesDao.getByUUID(id);
+	}
 	
 	@Override
 	public List<SeriesDO> list(Map<String, Object> map){

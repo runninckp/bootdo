@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.xcx.dao.BrandDao">
+
+	<select id="get" resultType="com.bootdo.xcx.domain.BrandDO">
+		select `id`,`Founder`,`company`,`direction`,`imgUrl`,`created`,`modified`,`gtm_create`,`gtm_modified`,`uuid`,`CName`,`EName`,`status` from brand where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.xcx.domain.BrandDO">
+		select `id`,`Founder`,`company`,`direction`,`imgUrl`,`created`,`modified`,`gtm_create`,`gtm_modified`,`uuid`,`CName`,`EName`,`status` from brand
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="founder != null and founder != ''"> and Founder = #{founder} </if>
+		  		  <if test="company != null and company != ''"> and company = #{company} </if>
+		  		  <if test="direction != null and direction != ''"> and direction = #{direction} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgUrl = #{imgurl} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
+		  		  <if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate} </if>
+		  		  <if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified} </if>
+		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+		  		  <if test="cname != null and cname != ''"> and CName = #{cname} </if>
+		  		  <if test="ename != null and ename != ''"> and EName = #{ename} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryBrand" resultType="com.bootdo.xcx.domain.BrandDO">
+		select `id`,`Founder`,`company`,`direction`,`imgUrl`,`created`,`modified`,`gtm_create`,`gtm_modified`,`uuid`,`CName`,`EName`,`status` from brand WHERE status = '1'
+		order by id desc
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from brand
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="founder != null and founder != ''"> and Founder = #{founder} </if>
+		  		  <if test="company != null and company != ''"> and company = #{company} </if>
+		  		  <if test="direction != null and direction != ''"> and direction = #{direction} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgUrl = #{imgurl} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
+		  		  <if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate} </if>
+		  		  <if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified} </if>
+		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+		  		  <if test="cname != null and cname != ''"> and CName = #{cname} </if>
+		  		  <if test="ename != null and ename != ''"> and EName = #{ename} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.xcx.domain.BrandDO" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="uuid" resultType="String" order="BEFORE">
+			select  replace(uuid(),'-','')   from dual
+		</selectKey>
+		insert into brand
+		(
+			`Founder`, 
+			`company`, 
+			`direction`, 
+			`imgUrl`, 
+			`created`, 
+			`modified`, 
+			`gtm_create`, 
+			`gtm_modified`, 
+			`uuid`, 
+			`CName`, 
+			`EName`, 
+			`status`
+		)
+		values
+		(
+			#{founder}, 
+			#{company}, 
+			#{direction}, 
+			#{imgurl}, 
+			#{created}, 
+			#{modified}, 
+			#{gtmCreate}, 
+			#{gtmModified}, 
+			#{uuid}, 
+			#{cname}, 
+			#{ename}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.xcx.domain.BrandDO">
+		update brand 
+		<set>
+			<if test="founder != null">`Founder` = #{founder}, </if>
+			<if test="company != null">`company` = #{company}, </if>
+			<if test="direction != null">`direction` = #{direction}, </if>
+			<if test="imgurl != null">`imgUrl` = #{imgurl}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="modified != null">`modified` = #{modified}, </if>
+			<if test="gtmCreate != null">`gtm_create` = #{gtmCreate}, </if>
+			<if test="gtmModified != null">`gtm_modified` = #{gtmModified}, </if>
+			<if test="uuid != null">`uuid` = #{uuid}, </if>
+			<if test="cname != null">`CName` = #{cname}, </if>
+			<if test="ename != null">`EName` = #{ename}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from brand where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from brand where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="listBrand" resultType="com.bootdo.xcx.domain.BrandDO">
+		select distinct  `uuid` ,`cname` ,`ename` ,`imgurl` , direction from brand
+		WHERE status = '1'
+	</select>
+</mapper>
