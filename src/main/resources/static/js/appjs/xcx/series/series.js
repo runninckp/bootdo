@@ -1,6 +1,7 @@
 
 var prefix = "/xcx/series"
 $(function() {
+    getBrandList();
 	load();
 });
 
@@ -33,6 +34,8 @@ function load() {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
 								offset:params.offset,
+                                sort:'brand_id',
+                                order:'desc',
 					            cname:$('#searchName').val()
 					           // username:$('#searchName').val()
 							};
@@ -50,7 +53,7 @@ function load() {
 
 																{
 									field : 'brandId', 
-									title : '品牌id' 
+									title : '品牌名字' ,formatter:brandFormatter
 								},
 																{
 									field : 'cname', 
@@ -168,4 +171,38 @@ function batchRemove() {
 	}, function() {
 
 	});
+}
+
+
+function getBrandList() {
+    $.ajax({
+        cache : true,
+        type : "GET",
+        url : "/xcx/brand/type",
+        async : false,
+        error : function(request) {
+            parent.layer.alert("Connection error");
+        },
+        success : function(data) {
+            console.log(data);
+            if (data.code == 0) {
+                window["brand"] = data.data;
+            } else {
+                parent.layer.alert(data.msg)
+            }
+
+        }
+    });
+
+}
+
+function brandFormatter(value, row, index) {
+    var string = value;
+    $(window["brand"]).each(function (index, obj) {
+        if(obj.uuid ==value){
+            string =  '<span class="label label-primary">'+obj.cname+'</span>';
+            return true;
+        }
+    });
+    return string;
 }

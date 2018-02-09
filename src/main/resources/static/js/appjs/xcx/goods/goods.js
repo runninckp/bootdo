@@ -1,6 +1,7 @@
 
 var prefix = "/xcx/goods"
 $(function() {
+    getTypeList();
 	load();
 });
 
@@ -87,11 +88,13 @@ function load() {
 								},
 																{
 									field : 'type', width :80,
-                                                                    title : '类型/款式'
+                                    title : '类型/款式',
+									formatter : typeFormatter
+
 								},
 																{
 									field : 'series',width :80,
-                                                                    title : '系列'
+                                    title : '系列'
 								},
 																{
 									field : 'characteristic', visible : false,
@@ -230,6 +233,39 @@ function remove(id) {
 }
 
 function resetPwd(id) {
+}
+
+
+function typeFormatter(value, row, index) {
+    var string = value;
+    $(window["type"]).each(function (index, obj) {
+        if(obj.value ==value){
+             string =  '<span class="label label-primary">'+obj.name+'</span>';
+            return true;
+        }
+    });
+    return string;
+}
+
+function getTypeList() {
+    $.ajax({
+        cache : true,
+        type : "GET",
+        url : "/api/dict/getAllDict",
+        async : false,
+        error : function(request) {
+            parent.layer.alert("Connection error");
+        },
+        success : function(data) {
+            if (data.code == 0) {
+                var json = data.data.zb_type;
+                window["type"] = data.data.zb_type;
+            } else {
+                parent.layer.alert(data.msg)
+            }
+
+        }
+    });
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组

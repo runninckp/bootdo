@@ -12,6 +12,8 @@ import com.bootdo.xcx.service.BrandService;
 import com.bootdo.xcx.service.GoodsService;
 import com.bootdo.xcx.service.SeriesService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api")
 public class OpenApiController  extends BaseController {
+    private final static Logger logger = LoggerFactory.getLogger(OpenApiController.class);
     @Autowired
     private DictService sysDictService;
     @Autowired
@@ -49,12 +52,17 @@ public class OpenApiController  extends BaseController {
 
     /**
      *:2：通过商品的uuid获取商品详细信息
-     * @param uuid
+     * @param params
      * @return
      */
     @ResponseBody
-    @GetMapping("/goods/{uuid}")
-    Map<String, Object> edit(@PathVariable("uuid") String uuid){
+    @PostMapping("/goods/getGood")
+    Map<String, Object> getGood(@RequestParam Map<String, Object> params){
+        logger.trace(" 通过商品的uuid获取商品详细信息："+JSON.toJSONString(params));
+        if(params==null||params.get("uuid")==null){
+            return R.error();
+        }
+        String uuid = params.get("uuid").toString();
         GoodsDO goods = goodsService.get(uuid);
         HashMap hashMap = new HashMap();
         hashMap.put("data",goods);
@@ -63,13 +71,18 @@ public class OpenApiController  extends BaseController {
 
     /**
      *:2：通过品牌的id获取品牌详细信息
-     * @param id
+     * @param params
      * @return
      * 完成
      */
     @ResponseBody
-    @GetMapping("/brand/{id}")
-    Map<String, Object> edit(@PathVariable("id") Long id){
+    @PostMapping("/brand/getBrand")
+    Map<String, Object> getBrand(@RequestParam Map<String, Object> params){
+        logger.trace(" 通过品牌的id获取品牌详细信息请求入参："+JSON.toJSONString(params));
+        if(params==null||params.get("id")==null){
+            return R.error();
+        }
+        Long id = Long.valueOf(params.get("id").toString()) ;
         BrandDO brand = brandService.get(id);
         HashMap hashMap = new HashMap();
         hashMap.put("data",brand);
@@ -106,6 +119,7 @@ public class OpenApiController  extends BaseController {
     @ResponseBody
     @PostMapping("/goods/choiceGoods")
     public R choiceGoods(@RequestParam Map<String, Object> params){
+        logger.trace(" 精确查询商品请求入参："+JSON.toJSONString(params));
         //查询列表数据
         if(params==null){
             return R.error();
@@ -152,6 +166,7 @@ public class OpenApiController  extends BaseController {
     @ResponseBody
     @PostMapping("/goods/searchGoods")
     public R searchGoods(@RequestParam Map<String, Object> params){
+        logger.trace("页面模糊查询商品请求入参："+JSON.toJSONString(params));
         //查询列表数据
         Query query = new Query(params);
         List<GoodsDO> goodsList = goodsService.searchGoods(query);
@@ -171,6 +186,7 @@ public class OpenApiController  extends BaseController {
     @PostMapping("/brand/query")
     public Map queryBrand(@RequestParam Map<String, Object> params){
         //查询列表数据
+        logger.trace("查询所有的品牌请求入参："+JSON.toJSONString(params));
         if(StringUtils.isEmpty(params.get("sort").toString())){
             return R.error();
         }

@@ -3,6 +3,7 @@ bootdo:
 logging:
   level:
     com.bootdo: debug
+  file: log\myspringboot.log
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

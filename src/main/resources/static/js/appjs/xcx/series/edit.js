@@ -1,4 +1,5 @@
 $().ready(function() {
+    getBrandList()
 	validateRule();
 });
 
@@ -46,4 +47,31 @@ function validateRule() {
 			}
 		}
 	})
+}
+
+
+function getBrandList() {
+    $.ajax({
+        cache : true,
+        type : "GET",
+        url : "/xcx/brand/type",
+        async : false,
+        error : function(request) {
+            parent.layer.alert("Connection error");
+        },
+        success : function(data) {
+            if (data.code == 0) {
+                var json = data.data;
+                $("#brandId").empty();
+                for ( var i = 0; i < json.length; i++){
+                    $("#brandId").prepend('<option value="' + json[i].uuid + '">' + json[i].cname+','+json[i].ename + '</option>')
+                };
+                $("#brandId").prepend('<option value="0">请选择</option>')
+            } else {
+                parent.layer.alert(data.msg)
+            }
+
+        }
+    });
+
 }

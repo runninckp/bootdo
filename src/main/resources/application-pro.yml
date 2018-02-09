@@ -2,7 +2,9 @@ bootdo:
   uploadPath: /var/uploaded_files/
 logging:
   level:
-    root: error
+    root: trace
+    #配置日志文件路径
+  file: /var/log/myspringboot.log
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

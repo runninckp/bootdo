@@ -176,7 +176,7 @@ public class Sort {
                         "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
                 };
         for(String a:alphatableb){
-            for(int i=0;i<list.size();i++){//为了排序都返回大写字母
+            for(int i=0;i<list.size();i++){ //为了排序都返回大写字母
                 String cname = StringUtils.isNotEmpty(list.get(i).getCname().toString())?list.get(i).getCname().toString():list.get(i).getEname().toString();
                 String ename = StringUtils.isNotEmpty(list.get(i).getEname().toString())?list.get(i).getEname().toString():list.get(i).getCname().toString();
                 //1：根据中文，2：根据英文
@@ -190,7 +190,9 @@ public class Sort {
                     arraylist.add(list.get(i));
                 }
             }
-            map.put(a,arraylist);
+            if (arraylist.size()>0){
+                map.put(a,arraylist);
+            }
             arraylist=new ArrayList();
         }
         return map;
