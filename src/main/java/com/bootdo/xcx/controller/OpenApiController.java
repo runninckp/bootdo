@@ -124,11 +124,11 @@ public class OpenApiController  extends BaseController {
         if(params==null){
             return R.error();
         }
+        params.put("status","1");
         List<GoodsDO> goodsList = goodsService.list(params);
         HashMap hashMap = new HashMap();
         if(params.get("brandUuid")!=null){
             List<SeriesDO> series = new ArrayList<>();
-            boolean a = params.get("seriesUuid")==null;
             if ( params.get("seriesUuid")==null){
                 series = seriesService.getSeriesByBrandUuid(params.get("brandUuid").toString());
             }else {

@@ -17,6 +17,7 @@
 			<if test="type != null and type != ''"> and type = #{type} </if>
 			<if test="cname != null and cname != ''"> and CName like CONCAT('%',#{cname},'%') </if>
 			<if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
 			<if test="seriesUuid != null and seriesUuid != ''"> and series_uuid = #{seriesUuid} </if>
 		</where>
 
@@ -35,7 +36,7 @@
 	<!--模糊搜索所有商品-->
 	<select id="searchGoods" resultType="com.bootdo.xcx.domain.GoodsDO">
 		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand` from goods
-		 WHERE CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
+		 WHERE status = '1' and CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
 		order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -45,7 +46,7 @@
 	
  	<select id="countSearch" resultType="int">
 		select count(*) from goods
-		WHERE CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
+		WHERE status = '1' and CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
 	</select>
 
 	<select id="count" resultType="int">
