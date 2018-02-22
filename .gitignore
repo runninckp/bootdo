@@ -35,4 +35,5 @@ proguard/
 *.iml 
 
 # package file
-/target/ 
+/target/
+/target
