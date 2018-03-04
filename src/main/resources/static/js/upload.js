@@ -542,6 +542,7 @@
 
         $upload.on('click', function() {
             if ( $(this).hasClass( 'disabled' ) ) {
+
                 return false;
             }
 
@@ -555,20 +556,57 @@
 
         });
 
+        imgURLArray = $("#imgurl").val()?JSON.parse($("#imgurl").val()):[];
+
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
         uploader.on( 'uploadSuccess', function( file ,response ) {
             var fileName= response.fileName;
-            var fileUrl= response.fileName;
-            var aa = [];
+            var fileUrl= response.fileUrl;
+            var aa = {};
             aa.fileName =fileName;
             aa.fileUrl =fileUrl;
-            console.log(aa);
-            var josn = JSON.stringify(aa);
-            console.log(josn);
+            imgURLArray.push(aa);
+            var josn = JSON.stringify(imgURLArray);
+
             $("#imgurl").val(josn);
-            /*var fileItem = uploader.getFiles();//获取上传成功的文件
-            console.log(fileItem);*/
         });
+        uploader.on('error',function(type ) {
+            switch (type){
+                    case "Q_EXCEED_NUM_LIMIT" :
+                    alert("上次文件数量必须小于等于5!");
+                        break;
+                    case "Q_EXCEED_SIZE_LIMIT " :
+                    alert("上传文件过大!");
+                        break;
+                    case "Q_TYPE_DENIED " :
+                    alert("上传文件类型错误！");
+                        break;
+            }
+
+        });
+        uploader.on('beforeFileQueued',function(files ) {
+            //还在队列中的数据
+            var auploader =uploader.getStats().queueNum;
+            if(1+auploader+imgURLArray.length>5){
+               alert("上次文件数量必须小于等于5!");
+               return false;
+           }
+
+        });
+        //删除文件
+        /*uploader.on( 'fileDequeued', function( file ) {
+            console.log("开始删除前："+JSON.stringify(imgURLArray));
+            console.log(file);
+           for(var i = 0; i < imgURLArray.length; i++){
+                if(imgURLArray[i].name ==file.name){
+                    imgURLArray.remove(imgURLArray[i]);
+                    return ;
+                }
+           }
+            var josn = JSON.stringify(imgURLArray);
+            console.log("结束删除："+josn);
+            $("#imgurl").val(josn);
+        });*/
 
         $info.on( 'click', '.retry', function() {
             uploader.retry();

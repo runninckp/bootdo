@@ -158,11 +158,11 @@
 			<if test="modified != null">`modified` = #{modified}, </if>
 			<if test="gtmCreate != null">`gtm_create` = #{gtmCreate}, </if>
 			<if test="gtmModified != null">`gtm_modified` = #{gtmModified}, </if>
-			<if test="status != null">`status` = #{status}</if>
-			<if test="imgurl != null">`imgUrl` = #{imgurl}</if>
-			<if test="brand != null">`brand` = #{brand}</if>
-			<if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
-			<if test="seriesUuid != null and seriesUuid != ''"> and series_uuid = #{seriesUuid} </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="imgurl != null">`imgUrl` = #{imgurl}, </if>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="brandUuid != null">  brand_uuid = #{brandUuid} , </if>
+			<if test="seriesUuid != null"> series_uuid = #{seriesUuid} </if>
 		</set>
 		where uuid = #{uuid}
 	</update>

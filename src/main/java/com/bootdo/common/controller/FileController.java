@@ -140,9 +140,9 @@ public class FileController extends BaseController {
 	@ResponseBody
 	@PostMapping("/upload")
 	R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		if ("test".equals(getUsername())) {
+		/*if ("test".equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
+		}*/
 		String fileName = file.getOriginalFilename();
 		fileName = FileUtil.renameToUUID(fileName);
 		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
@@ -153,7 +153,10 @@ public class FileController extends BaseController {
 		}
 
 		if (sysFileService.save(sysFile) > 0) {
-			return R.ok().put("fileName",sysFile.getUrl());
+			HashMap map = new HashMap();
+			map.put("fileName",fileName);
+			map.put("fileUrl",sysFile.getUrl());
+			return R.ok(map);
 		}
 		return R.error();
 	}

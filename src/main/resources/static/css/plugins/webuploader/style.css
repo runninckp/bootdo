@@ -133,13 +133,15 @@ table {
     border-color: red;
 }
 
-#uploader .filelist {
+#uploader .filelist,
+.editableGallery .filelist{
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-#uploader .filelist:after {
+#uploader .filelist:after,
+.editableGallery .filelist:after {
     content: '';
     display: block;
     width: 0;
@@ -148,7 +150,8 @@ table {
     clear: both;
 }
 
-#uploader .filelist li {
+#uploader .filelist li,
+.editableGallery .filelist li{
     width: 110px;
     height: 110px;
     background: url(../../../image/bg.png) no-repeat;
@@ -235,7 +238,8 @@ table {
     }
 }
 
-#uploader .filelist li p.imgWrap {
+#uploader .filelist li p.imgWrap,
+.editableGallery .filelist li p.imgWrap{
     position: relative;
     z-index: 2;
     line-height: 110px;
@@ -257,7 +261,8 @@ table {
     transition: 200ms ease-out;
 }
 
-#uploader .filelist li img {
+#uploader .filelist li img,
+.editableGallery .filelist li img{
     width: 100%;
 }
 
@@ -284,7 +289,8 @@ table {
     background: url(../../../image/success.png) no-repeat right bottom;
 }
 
-#uploader .filelist div.file-panel {
+#uploader .filelist div.file-panel,
+.editableGallery .filelist div.file-panel{
     position: absolute;
     height: 0;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000', endColorstr='#80000000')\0;
@@ -296,7 +302,8 @@ table {
     z-index: 300;
 }
 
-#uploader .filelist div.file-panel span {
+#uploader .filelist div.file-panel span,
+.editableGallery .filelist div.file-panel span{
     width: 24px;
     height: 24px;
     display: inline;
@@ -322,10 +329,12 @@ table {
     background-position: -24px 0;
 }
 
-#uploader .filelist div.file-panel span.cancel {
+#uploader .filelist div.file-panel span.cancel,
+.editableGallery .filelist div.file-panel span.cancel{
     background-position: -48px -24px;
 }
-#uploader .filelist div.file-panel span.cancel:hover {
+#uploader .filelist div.file-panel span.cancel:hover,
+.editableGallery .filelist div.file-panel span.cancel:hover{
     background-position: -48px 0;
 }
 
