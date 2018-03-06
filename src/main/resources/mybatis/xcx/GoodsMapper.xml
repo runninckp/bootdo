@@ -35,7 +35,7 @@
 
 	<!--模糊搜索所有商品-->
 	<select id="searchGoods" resultType="com.bootdo.xcx.domain.GoodsDO">
-		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand` from goods
+		select `id`,`uuid`,`CName`,`EName`,`price`,`number`,`quality`,`material`,`describe`,`type`,`series`,`characteristic`,`market`,`colour`,`others`,`created`,`modified`,`gtm_create`,`gtm_modified`,`status`,`imgUrl`,`brand`,`brand_uuid`,`series_uuid`  from goods
 		 WHERE status = '1' and CONCAT(IFNULL(`brand`,''),IFNULL(`series`,''),IFNULL(`cname`,'')) like CONCAT('%',#{keyWork},'%')
 		order by id desc
 		<if test="offset != null and limit != null">

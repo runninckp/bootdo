@@ -58,7 +58,7 @@ public class Sort {
                     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
             };
     private static int[] table = new int[27];  //初始化
-    {
+    static{
         for (int i = 0; i < 27; ++i) {
             table[i] = gbValue(chartable[i]);
         }
