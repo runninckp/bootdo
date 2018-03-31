@@ -24,7 +24,7 @@ public class GoodsDO implements Serializable {
 	//英文名字
 	private String ename;
 	//价格
-	private Integer price;
+	private Double price;
 	//编号
 	private String number;
 	//材质
@@ -147,13 +147,13 @@ public class GoodsDO implements Serializable {
 	/**
 	 * 设置：价格
 	 */
-	public void setPrice(Integer price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	/**
 	 * 获取：价格
 	 */
-	public Integer getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 	/**
