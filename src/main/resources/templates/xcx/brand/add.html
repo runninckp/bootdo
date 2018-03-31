@@ -3,6 +3,8 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
+<link rel="stylesheet" type="text/css" href="/css/plugins/webuploader/webuploader.css" />
+<link rel="stylesheet" type="text/css" href="/css/plugins/webuploader/style.css" />
 	<div class="wrapper wrapper-content ">
 		<div class="row">
 			<div class="col-sm-12">
@@ -45,10 +47,39 @@
 									<textarea id="direction" name="direction" row="10" cols="63"  type="text">详细描述:</textarea>
 								</div>
 							</div>
-														<div class="form-group">	
+													<!--	<div class="form-group">
 								<label class="col-sm-3 control-label">图片：</label>
 								<div class="col-sm-8">
 									<input id="imgurl" name="imgurl" class="form-control" type="text">
+								</div>
+							</div>-->
+
+							<!--图片链接-->
+							<input id="imgurl" name="imgurl" class="form-control" type="hidden">
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">图片上传：</label>
+
+								<div id="container" class="col-sm-8">
+									<!--头部，相册选择和格式选择-->
+
+									<div id="uploader">
+										<div class="queueList">
+											<div id="dndArea" class="placeholder">
+												<div id="filePicker"></div>
+												<p>或将照片拖到这里，最好只上传1张</p>
+											</div>
+										</div>
+										<div class="statusBar" style="display:none;">
+											<div class="progress">
+												<span class="text">0%</span>
+												<span class="percentage"></span>
+											</div><div class="info"></div>
+											<div class="btns">
+												<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 
@@ -69,5 +100,7 @@
 	<div th:include="include::footer"></div>
 	<script type="text/javascript" src="/js/appjs/xcx/brand/add.js">
 	</script>
+	<script type="text/javascript" src="/js/webuploader.js"></script>
+	<script type="text/javascript" src="/js/upload.js"></script>
 </body>
 </html>
