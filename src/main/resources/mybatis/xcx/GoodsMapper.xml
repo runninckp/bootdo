@@ -15,6 +15,7 @@
         <where>  
 			<if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
 			<if test="type != null and type != ''"> and type = #{type} </if>
+			<if test="number != null and number != ''"> and number = #{number} </if>
 			<if test="cname != null and cname != ''"> and CName like CONCAT('%',#{cname},'%') </if>
 			<if test="brandUuid != null and brandUuid != ''"> and brand_uuid = #{brandUuid} </if>
 			<if test="status != null and status != ''"> and status = #{status} </if>
