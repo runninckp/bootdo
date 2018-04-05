@@ -151,7 +151,49 @@ public class OpenApiController  extends BaseController {
         return R.ok(hashMap);
     }
 
+    /**
+     * 获取品牌下的系列
+     */
+    @ResponseBody
+    @PostMapping("/series/querySeries")
+    public R querySeries(@RequestParam Map<String, Object> params){
+        logger.trace(" 获取品牌下的系列请求入参："+JSON.toJSONString(params));
+        //查询列表数据
+        if(params==null){
+            return R.error();
+        }
+        params.put("status","1");
+        HashMap hashMap = new HashMap();
+        if(params.get("brandUuid")==null){
+            return R.error("品牌UUID为空！");
+        }
+        List<SeriesDO>  series = seriesService.getSeriesByBrandUuid(params.get("brandUuid").toString());
+        hashMap.put("data",series);
+        return R.ok(hashMap);
+    }
 
+
+    /**
+     * 获取系列下的商品
+     */
+    @ResponseBody
+    @PostMapping("/goods/queryGoodsByBrandAndSeries")
+    public R queryGoodsByBrandAndSeries(@RequestParam Map<String, Object> params){
+        logger.trace(" 获取系列下的商品请求入参："+JSON.toJSONString(params));
+        //查询列表数据
+        if(params==null||params.get("brandUuid")==null||params.get("offset")==null||params.get("limit")==null){
+            return R.error("品牌UUID不能为空！");
+        }
+        params.put("status","1");
+        Query query = new Query(params);
+        List<GoodsDO> goodsList = goodsService.list(query);
+        int total = goodsService.count(query);
+        PageUtils pageUtils = new PageUtils(goodsList, total);
+        HashMap hashMap = new HashMap();
+        hashMap.put("data",pageUtils);
+
+        return R.ok(hashMap);
+    }
 
 
 
