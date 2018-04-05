@@ -1,14 +1,9 @@
 package com.bootdo.common.utils;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.alibaba.fastjson.JSON;
 import com.bootdo.xcx.domain.BrandDO;
-import org.apache.commons.collections.MapUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Sort {
     public static void main(String[] args) {
@@ -167,8 +162,8 @@ public class Sort {
         return map;
     }
 
-    public static Map sortBrand(List<BrandDO> list,String type){
-        Map map=new HashMap();
+    public static LinkedHashMap sortBrand(List<BrandDO> list,String type){
+        LinkedHashMap map=new LinkedHashMap();
         ArrayList arraylist=new ArrayList();
         String[] alphatableb =
                 {
