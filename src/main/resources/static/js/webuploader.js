@@ -2165,11 +2165,13 @@
              * ```
              */
             compress: {
-                width: 1600,
-                height: 1600,
+                width: 1000,
+                height: 1000,
                 quality: 90,
                 allowMagnify: false,
                 crop: false,
+                compressSize: 50,
+                noCompressIfLarger: false,
                 preserveHeaders: true
             }
         });
