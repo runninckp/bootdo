@@ -19,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/api")
@@ -50,6 +47,153 @@ public class OpenApiController  extends BaseController {
         return R.ok(hashMap);
     }
 
+
+
+  /*  public void ckpckpckp2(){
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("status","1");
+        List<GoodsDO> DBGoods = goodsService.list(map);
+
+        for(GoodsDO goodsDO:DBGoods){
+
+        }
+
+    }
+
+    public void ckpckpckp(){
+        List<BrandDO> brandlist = null;
+
+        List<SeriesDO> serieslist = null;
+        List<GoodsDO> goodslist = null;
+        FileInputStream brandfis = null;
+        FileInputStream seriesfis = null;
+        FileInputStream goodsfis = null;
+        try {
+
+            //品牌
+            brandfis = new FileInputStream("F:\\data\\brandDO3.xls");
+            ExcelUtil<BrandDO> util1 = new ExcelUtil<BrandDO>(BrandDO.class);// 创建excel工具类
+            brandlist = util1.importExcel("品牌管理", brandfis);// 导入
+            //系列
+            seriesfis = new FileInputStream("F:\\data\\series2.xls");
+            ExcelUtil<SeriesDO> util2 = new ExcelUtil<SeriesDO >(SeriesDO.class);// 创建excel工具类
+            serieslist = util2.importExcel("Sheet1", seriesfis);// 导入
+            //商品
+            goodsfis = new FileInputStream("F:\\data\\goods2.xls");
+            ExcelUtil<GoodsDO> util3 = new ExcelUtil<GoodsDO>(GoodsDO.class);// 创建excel工具类
+            goodslist = util3.importExcel("Sheet1", goodsfis);// 导入
+
+           *//* for (BrandDO brandDO:brandlist){
+                brandDO.setGtmCreate(new Date());
+                brandDO.setGtmModified(new Date());
+                brandDO.setCreated(new Long(1));
+                brandDO.setModified(new Long(1));
+                brandDO.setStatus(1);
+                brandService.save(brandDO);
+            }*//*
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("status","1");
+            List<BrandDO> DBBrand = brandService.list(map);
+
+           // System.out.println("所有的品牌"+JSON.toJSONString(DBBrand));
+
+            for (SeriesDO seriesDO:serieslist){
+                for (BrandDO dbB:DBBrand){
+                    if (seriesDO.getBrandId().equals(dbB.getCname())){
+                        seriesDO.setBrandId(dbB.getUuid());
+                        seriesDO.setGtmCreate(new Date());
+                        seriesDO.setGtmModified(new Date());
+                        seriesDO.setCreated(new Long(1));
+                        seriesDO.setModified(new Long(1));
+                        seriesDO.setStatus(1);
+                        seriesService.save(seriesDO);
+                        continue;
+                    }
+                }
+
+            }
+
+            HashMap<String,Object> map33 = new HashMap<>();
+            map33.put("status","1");
+            List<SeriesDO> DBSeries = seriesService.list(map33);
+
+         *//*   System.out.println("所有的系列"+JSON.toJSONString(DBSeries));*//*
+
+            int num =0;
+            for (GoodsDO good:goodslist ) {
+               for (BrandDO brandDO:DBBrand){
+                    if (brandDO.getCname().equals(good.getBrand())){
+                        good.setBrandUuid(brandDO.getUuid());
+                        good.setBrand(brandDO.getCname());
+                    }
+                }
+                for (SeriesDO seriesDO:DBSeries){
+                    if (seriesDO.getCname().equals(good.getSeries())&&good.getBrandUuid().equals(seriesDO.getBrandId())){
+                        good.setSeriesUuid(seriesDO.getUuid());
+                        good.setSeries(seriesDO.getCname());
+
+                    }
+                }
+
+                if (good.getSeriesUuid()!=null&&good.getBrandUuid()!=null){
+                    good.setGtmCreate(new Date());
+                    good.setGtmModified(new Date());
+                    good.setCreated(new Long(1));
+                    good.setModified(new Long(1));
+                    good.setStatus(1);
+                    good.setType("10");
+                    goodsService.save(good);
+                    num++;
+                }else {
+                    System.out.println(JSON.toJSONString(good));
+                }
+            }
+            System.out.println("一共插入："+num);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void main1(String[] args){
+        List<BrandDO> brandlist = null;
+
+        List<SeriesDO> serieslist = null;
+        List<GoodsDO> goodslist = null;
+        FileInputStream brandfis = null;
+        FileInputStream seriesfis = null;
+        FileInputStream goodsfis = null;
+        try {
+
+            //品牌
+            brandfis = new FileInputStream("F:\\data\\brandDO3.xls");
+            ExcelUtil<BrandDO> util1 = new ExcelUtil<BrandDO>(BrandDO.class);// 创建excel工具类
+            brandlist = util1.importExcel("品牌管理", brandfis);// 导入
+            //系列
+            seriesfis = new FileInputStream("F:\\data\\series.xls");
+            ExcelUtil<SeriesDO> util2 = new ExcelUtil<SeriesDO >(SeriesDO.class);// 创建excel工具类
+            serieslist = util2.importExcel("Sheet1", seriesfis);// 导入
+            //商品
+            goodsfis = new FileInputStream("F:\\data\\goods.xls");
+            ExcelUtil<GoodsDO> util3 = new ExcelUtil<GoodsDO>(GoodsDO.class);// 创建excel工具类
+            goodslist = util3.importExcel("Sheet1", goodsfis);// 导入
+*//*
+            System.out.println(JSON.toJSONString(brandlist));
+            System.out.println(JSON.toJSONString(serieslist));
+            System.out.println(JSON.toJSONString(goodslist));*//*
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+*/
     /**
      *:2：通过商品的uuid获取商品详细信息
      * @param params
@@ -233,7 +377,7 @@ public class OpenApiController  extends BaseController {
             return R.error();
         }
         List<BrandDO> goodsList = brandService.queryBrand(params);
-        Map Map =Sort.sortBrand(goodsList,params.get("sort").toString());
+        LinkedHashMap Map =Sort.sortBrand(goodsList,params.get("sort").toString());
 
         HashMap hashMap = new HashMap();
         hashMap.put("data",Map);
