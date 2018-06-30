@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.yzjj.dao.GoldDao">
+
+	<select id="get" resultType="com.bootdo.yzjj.domain.GoldDO">
+		select `gold_buy`,`gold_sale`,`gold_high`,`gold_low`,`BJ_gold_sale`,`BJ_gold_buy`,`BJ_gold_high`,`BJ_gold_low`,`BY_gold_sale`,`BY_gold_buy`,`BY_gold_high`,`BY_gold_low`,`HK_gold_sale`,`HK_gold_buy`,`HK_gold_high`,`HK_gold_low`,`London_gold_sale`,`London_gold_buy`,`London_gold_high`,`London_gold_low`,`time` from gold where time = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.yzjj.domain.GoldDO">
+		select `gold_buy`,`gold_sale`,`gold_high`,`gold_low`,`BJ_gold_sale`,`BJ_gold_buy`,`BJ_gold_high`,`BJ_gold_low`,`BY_gold_sale`,`BY_gold_buy`,`BY_gold_high`,`BY_gold_low`,`HK_gold_sale`,`HK_gold_buy`,`HK_gold_high`,`HK_gold_low`,`London_gold_sale`,`London_gold_buy`,`London_gold_high`,`London_gold_low`,`time` from gold
+        <where>  
+		  		  <if test="goldBuy != null and goldBuy != ''"> and gold_buy = #{goldBuy} </if>
+		  		  <if test="goldSale != null and goldSale != ''"> and gold_sale = #{goldSale} </if>
+		  		  <if test="goldHigh != null and goldHigh != ''"> and gold_high = #{goldHigh} </if>
+		  		  <if test="goldLow != null and goldLow != ''"> and gold_low = #{goldLow} </if>
+		  		  <if test="bjGoldSale != null and bjGoldSale != ''"> and BJ_gold_sale = #{bjGoldSale} </if>
+		  		  <if test="bjGoldBuy != null and bjGoldBuy != ''"> and BJ_gold_buy = #{bjGoldBuy} </if>
+		  		  <if test="bjGoldHigh != null and bjGoldHigh != ''"> and BJ_gold_high = #{bjGoldHigh} </if>
+		  		  <if test="bjGoldLow != null and bjGoldLow != ''"> and BJ_gold_low = #{bjGoldLow} </if>
+		  		  <if test="byGoldSale != null and byGoldSale != ''"> and BY_gold_sale = #{byGoldSale} </if>
+		  		  <if test="byGoldBuy != null and byGoldBuy != ''"> and BY_gold_buy = #{byGoldBuy} </if>
+		  		  <if test="byGoldHigh != null and byGoldHigh != ''"> and BY_gold_high = #{byGoldHigh} </if>
+		  		  <if test="byGoldLow != null and byGoldLow != ''"> and BY_gold_low = #{byGoldLow} </if>
+		  		  <if test="hkGoldSale != null and hkGoldSale != ''"> and HK_gold_sale = #{hkGoldSale} </if>
+		  		  <if test="hkGoldBuy != null and hkGoldBuy != ''"> and HK_gold_buy = #{hkGoldBuy} </if>
+		  		  <if test="hkGoldHigh != null and hkGoldHigh != ''"> and HK_gold_high = #{hkGoldHigh} </if>
+		  		  <if test="hkGoldLow != null and hkGoldLow != ''"> and HK_gold_low = #{hkGoldLow} </if>
+		  		  <if test="londonGoldSale != null and londonGoldSale != ''"> and London_gold_sale = #{londonGoldSale} </if>
+		  		  <if test="londonGoldBuy != null and londonGoldBuy != ''"> and London_gold_buy = #{londonGoldBuy} </if>
+		  		  <if test="londonGoldHigh != null and londonGoldHigh != ''"> and London_gold_high = #{londonGoldHigh} </if>
+		  		  <if test="londonGoldLow != null and londonGoldLow != ''"> and London_gold_low = #{londonGoldLow} </if>
+		  		  <if test="time != null and time != ''"> and time = #{time} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from gold
+		 <where>  
+		  		  <if test="goldBuy != null and goldBuy != ''"> and gold_buy = #{goldBuy} </if>
+		  		  <if test="goldSale != null and goldSale != ''"> and gold_sale = #{goldSale} </if>
+		  		  <if test="goldHigh != null and goldHigh != ''"> and gold_high = #{goldHigh} </if>
+		  		  <if test="goldLow != null and goldLow != ''"> and gold_low = #{goldLow} </if>
+		  		  <if test="bjGoldSale != null and bjGoldSale != ''"> and BJ_gold_sale = #{bjGoldSale} </if>
+		  		  <if test="bjGoldBuy != null and bjGoldBuy != ''"> and BJ_gold_buy = #{bjGoldBuy} </if>
+		  		  <if test="bjGoldHigh != null and bjGoldHigh != ''"> and BJ_gold_high = #{bjGoldHigh} </if>
+		  		  <if test="bjGoldLow != null and bjGoldLow != ''"> and BJ_gold_low = #{bjGoldLow} </if>
+		  		  <if test="byGoldSale != null and byGoldSale != ''"> and BY_gold_sale = #{byGoldSale} </if>
+		  		  <if test="byGoldBuy != null and byGoldBuy != ''"> and BY_gold_buy = #{byGoldBuy} </if>
+		  		  <if test="byGoldHigh != null and byGoldHigh != ''"> and BY_gold_high = #{byGoldHigh} </if>
+		  		  <if test="byGoldLow != null and byGoldLow != ''"> and BY_gold_low = #{byGoldLow} </if>
+		  		  <if test="hkGoldSale != null and hkGoldSale != ''"> and HK_gold_sale = #{hkGoldSale} </if>
+		  		  <if test="hkGoldBuy != null and hkGoldBuy != ''"> and HK_gold_buy = #{hkGoldBuy} </if>
+		  		  <if test="hkGoldHigh != null and hkGoldHigh != ''"> and HK_gold_high = #{hkGoldHigh} </if>
+		  		  <if test="hkGoldLow != null and hkGoldLow != ''"> and HK_gold_low = #{hkGoldLow} </if>
+		  		  <if test="londonGoldSale != null and londonGoldSale != ''"> and London_gold_sale = #{londonGoldSale} </if>
+		  		  <if test="londonGoldBuy != null and londonGoldBuy != ''"> and London_gold_buy = #{londonGoldBuy} </if>
+		  		  <if test="londonGoldHigh != null and londonGoldHigh != ''"> and London_gold_high = #{londonGoldHigh} </if>
+		  		  <if test="londonGoldLow != null and londonGoldLow != ''"> and London_gold_low = #{londonGoldLow} </if>
+		  		  <if test="time != null and time != ''"> and time = #{time} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.yzjj.domain.GoldDO">
+		insert into gold
+		(
+			`gold_buy`, 
+			`gold_sale`, 
+			`gold_high`, 
+			`gold_low`, 
+			`BJ_gold_sale`, 
+			`BJ_gold_buy`, 
+			`BJ_gold_high`, 
+			`BJ_gold_low`, 
+			`BY_gold_sale`, 
+			`BY_gold_buy`, 
+			`BY_gold_high`, 
+			`BY_gold_low`, 
+			`HK_gold_sale`, 
+			`HK_gold_buy`, 
+			`HK_gold_high`, 
+			`HK_gold_low`, 
+			`London_gold_sale`, 
+			`London_gold_buy`, 
+			`London_gold_high`, 
+			`London_gold_low`, 
+			`time`
+		)
+		values
+		(
+			#{goldBuy}, 
+			#{goldSale}, 
+			#{goldHigh}, 
+			#{goldLow}, 
+			#{bjGoldSale}, 
+			#{bjGoldBuy}, 
+			#{bjGoldHigh}, 
+			#{bjGoldLow}, 
+			#{byGoldSale}, 
+			#{byGoldBuy}, 
+			#{byGoldHigh}, 
+			#{byGoldLow}, 
+			#{hkGoldSale}, 
+			#{hkGoldBuy}, 
+			#{hkGoldHigh}, 
+			#{hkGoldLow}, 
+			#{londonGoldSale}, 
+			#{londonGoldBuy}, 
+			#{londonGoldHigh}, 
+			#{londonGoldLow}, 
+			#{time}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.yzjj.domain.GoldDO">
+		update gold 
+		<set>
+			<if test="goldBuy != null">`gold_buy` = #{goldBuy}, </if>
+			<if test="goldSale != null">`gold_sale` = #{goldSale}, </if>
+			<if test="goldHigh != null">`gold_high` = #{goldHigh}, </if>
+			<if test="goldLow != null">`gold_low` = #{goldLow}, </if>
+			<if test="bjGoldSale != null">`BJ_gold_sale` = #{bjGoldSale}, </if>
+			<if test="bjGoldBuy != null">`BJ_gold_buy` = #{bjGoldBuy}, </if>
+			<if test="bjGoldHigh != null">`BJ_gold_high` = #{bjGoldHigh}, </if>
+			<if test="bjGoldLow != null">`BJ_gold_low` = #{bjGoldLow}, </if>
+			<if test="byGoldSale != null">`BY_gold_sale` = #{byGoldSale}, </if>
+			<if test="byGoldBuy != null">`BY_gold_buy` = #{byGoldBuy}, </if>
+			<if test="byGoldHigh != null">`BY_gold_high` = #{byGoldHigh}, </if>
+			<if test="byGoldLow != null">`BY_gold_low` = #{byGoldLow}, </if>
+			<if test="hkGoldSale != null">`HK_gold_sale` = #{hkGoldSale}, </if>
+			<if test="hkGoldBuy != null">`HK_gold_buy` = #{hkGoldBuy}, </if>
+			<if test="hkGoldHigh != null">`HK_gold_high` = #{hkGoldHigh}, </if>
+			<if test="hkGoldLow != null">`HK_gold_low` = #{hkGoldLow}, </if>
+			<if test="londonGoldSale != null">`London_gold_sale` = #{londonGoldSale}, </if>
+			<if test="londonGoldBuy != null">`London_gold_buy` = #{londonGoldBuy}, </if>
+			<if test="londonGoldHigh != null">`London_gold_high` = #{londonGoldHigh}, </if>
+			<if test="londonGoldLow != null">`London_gold_low` = #{londonGoldLow}, </if>
+		</set>
+		where time = #{time}
+	</update>
+	
+	<delete id="remove">
+		delete from gold where time = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from gold where time in 
+		<foreach item="time" collection="array" open="(" separator="," close=")">
+			#{time}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.yzjj.dao.AdvertDao">
+
+	<select id="get" resultType="com.bootdo.yzjj.domain.AdvertDO">
+		select `id`,`uuid`,`title`,`urls`,`remark`,`stutus`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.yzjj.domain.AdvertDO">
+		select `id`,`uuid`,`title`,`urls`,`remark`,`stutus`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+		  		  <if test="title != null and title != ''"> and title = #{title} </if>
+		  		  <if test="urls != null and urls != ''"> and urls = #{urls} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="describe != null and describe != ''"> and describe = #{describe} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
+		  		  <if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate} </if>
+		  		  <if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from advert
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
+		  		  <if test="title != null and title != ''"> and title = #{title} </if>
+		  		  <if test="urls != null and urls != ''"> and urls = #{urls} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="describe != null and describe != ''"> and describe = #{describe} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
+		  		  <if test="gtmCreate != null and gtmCreate != ''"> and gtm_create = #{gtmCreate} </if>
+		  		  <if test="gtmModified != null and gtmModified != ''"> and gtm_modified = #{gtmModified} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.yzjj.domain.AdvertDO" useGeneratedKeys="true" keyProperty="id">
+		insert into advert
+		(
+			`uuid`, 
+			`title`, 
+			`urls`, 
+			`remark`, 
+			`stutus`, 
+			`type`, 
+			`describe`, 
+			`created`, 
+			`modified`, 
+			`gtm_create`, 
+			`gtm_modified`
+		)
+		values
+		(
+			#{uuid}, 
+			#{title}, 
+			#{urls}, 
+			#{remark}, 
+			#{stutus}, 
+			#{type}, 
+			#{describe}, 
+			#{created}, 
+			#{modified}, 
+			#{gtmCreate}, 
+			#{gtmModified}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.yzjj.domain.AdvertDO">
+		update advert 
+		<set>
+			<if test="uuid != null">`uuid` = #{uuid}, </if>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="urls != null">`urls` = #{urls}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="stutus != null">`stutus` = #{stutus}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="describe != null">`describe` = #{describe}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="modified != null">`modified` = #{modified}, </if>
+			<if test="gtmCreate != null">`gtm_create` = #{gtmCreate}, </if>
+			<if test="gtmModified != null">`gtm_modified` = #{gtmModified}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from advert where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from advert where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
