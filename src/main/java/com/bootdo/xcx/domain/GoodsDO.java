@@ -1,5 +1,7 @@
 package com.bootdo.xcx.domain;
 
+import com.bootdo.common.utils.ExcelVOAttribute;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,22 +22,30 @@ public class GoodsDO implements Serializable {
 	//uuid
 	private String uuid;
 	//中文名称
+	@ExcelVOAttribute(name = "名称", column = "A", isExport = true)
 	private String cname;
 	//英文名字
 	private String ename;
 	//价格
+	@ExcelVOAttribute(name = "价格", column = "E", isExport = true)
 	private Double price;
 	//编号
+	@ExcelVOAttribute(name = "编号", column = "F", isExport = true)
 	private String number;
 	//材质
+	@ExcelVOAttribute(name = "材质", column = "G", isExport = true)
 	private String quality;
 	//材料
+	@ExcelVOAttribute(name = "材料", column = "H", isExport = true)
 	private String material;
 	//详细描述
+	@ExcelVOAttribute(name = "详情", column = "I", isExport = true)
 	private String describe;
-	//类型/款式
+	//类型/款式 编号	材质	材料	简介
+	@ExcelVOAttribute(name = "类型", column = "D", isExport = true)
 	private String type;
 	//系列
+	@ExcelVOAttribute(name = "系列", column = "C", isExport = true)
 	private String series;
 	//特点
 	private String characteristic;
@@ -56,12 +66,15 @@ public class GoodsDO implements Serializable {
 	//状态
 	private Integer status;
 	//品牌id
+
 	private String brandUuid;
 	//系列id
+
 	private String seriesUuid;
 	//图片
 	private String imgurl;
 	//品牌
+	@ExcelVOAttribute(name = "品牌", column = "B", isExport = true)
 	private String brand;
 
 	public String getImgurl() {

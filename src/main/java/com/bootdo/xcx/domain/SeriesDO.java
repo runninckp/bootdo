@@ -1,5 +1,7 @@
 package com.bootdo.xcx.domain;
 
+import com.bootdo.common.utils.ExcelVOAttribute;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +22,10 @@ public class SeriesDO implements Serializable {
 	//uuid
 	private String uuid;
 	//品牌id
+	@ExcelVOAttribute(name = "品牌", column = "A", isExport = true)
 	private String brandId;
 	//名字
+	@ExcelVOAttribute(name = "名字", column = "B", isExport = true)
 	private String cname;
 	//英语名字
 	private String ename;

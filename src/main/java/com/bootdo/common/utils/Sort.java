@@ -10,21 +10,23 @@ public class Sort {
         Sort obj1 = new Sort();
         System.out.println("======================");
         ArrayList list=new ArrayList();
-        list.add("adisen");
+        /*list.add("adisen");
         list.add("bulsi");
         list.add("爱人");
         list.add("Kobe");
         list.add("布丁");
-        list.add("杜甫");
-        list.add("元方");
+        list.add("杜甫");*/
+        list.add(" 梵人克雅宝");
+       /* list.add("元方");
         list.add("习惯");
         list.add("落幕");
-        list.add("天使");
+        list.add("天使");*/
         Map map=obj1.sort(list);
         System.out.println("-------分组后的输出-----------");
         System.out.println(map.get("A"));
         System.out.println(map.get("B"));
         System.out.println(map.get("C"));
+        System.out.println(map.get("F"));
         System.out.println(map.get("D"));
         System.out.println(map.get("Y"));
         System.out.println(map.get("Z"));

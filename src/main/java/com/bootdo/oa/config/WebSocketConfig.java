@@ -39,6 +39,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
         //注册一个名字为"endpointChat" 的endpoint,并指定 SockJS协议。   点对点-用
         registry.addEndpoint("/endpointChat").withSockJS();
+        //注册一个订阅的endpoint,并指定 SockJS协议
+        registry.addEndpoint("/webSocketServer").setAllowedOrigins("*").withSockJS();
     }
 
 
