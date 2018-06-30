@@ -3,6 +3,8 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
+<link rel="stylesheet" type="text/css" href="/css/plugins/webuploader/webuploader.css" />
+<link rel="stylesheet" type="text/css" href="/css/plugins/webuploader/style.css" />
 	<div class="wrapper wrapper-content ">
 		<div class="row">
 			<div class="col-sm-12">
@@ -10,72 +12,88 @@
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
 						<input id="id" name="id" th:value="${advert.id}"  type="hidden">
-							<div class="form-group">	
+							<!--<div class="form-group">
 								<label class="col-sm-3 control-label">uuid：</label>
 								<div class="col-sm-8">
 									<input id="uuid" name="uuid" th:value="${advert.uuid}" class="form-control" type="text">
 								</div>
-							</div>
+							</div>-->
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">广告标题：</label>
 								<div class="col-sm-8">
 									<input id="title" name="title" th:value="${advert.title}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">广告图片：</label>
-								<div class="col-sm-8">
-									<input id="urls" name="urls" th:value="${advert.urls}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">广告备注：</label>
-								<div class="col-sm-8">
-									<input id="remark" name="remark" th:value="${advert.remark}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
+
+
+													<!--	<div class="form-group">
 								<label class="col-sm-3 control-label">广告状态：</label>
 								<div class="col-sm-8">
-									<input id="stutus" name="stutus" th:value="${advert.stutus}" class="form-control" type="text">
+									<input id="status" name="status" th:value="${advert.status}" class="form-control" type="text">
 								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">类型：</label>
-								<div class="col-sm-8">
-									<input id="type" name="type" th:value="${advert.type}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
+							</div>-->
+
+							<div class="form-group">
 								<label class="col-sm-3 control-label">详细描述：</label>
 								<div class="col-sm-8">
 									<input id="describe" name="describe" th:value="${advert.describe}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">创建人id：</label>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">广告备注：</label>
 								<div class="col-sm-8">
-									<input id="created" name="created" th:value="${advert.created}" class="form-control" type="text">
+									<input id="remark" name="remark" th:value="${advert.remark}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">最近修改人id：</label>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型（1图片/2文字）：</label>
 								<div class="col-sm-8">
-									<input id="modified" name="modified" th:value="${advert.modified}" class="form-control" type="text">
+									<input id="type" name="type" th:value="${advert.type}" class="form-control"  type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">创建时间：</label>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">已上传图片：</label>
 								<div class="col-sm-8">
-									<input id="gtmCreate" name="gtmCreate" th:value="${advert.gtmCreate}" class="form-control" type="text">
+									<div id="moduleGallery" class="editableGallery"></div>
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">修改时间：</label>
-								<div class="col-sm-8">
-									<input id="gtmModified" name="gtmModified" th:value="${advert.gtmModified}" class="form-control" type="text">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">图片上传：</label>
+
+								<div id="container" class="col-sm-8">
+									<!--头部，相册选择和格式选择-->
+
+									<div id="uploader">
+										<div class="queueList">
+											<div id="dndArea" class="placeholder">
+												<div id="filePicker"></div>
+												<p>或将照片拖到这里，单次最多可选300张</p>
+											</div>
+										</div>
+										<div class="statusBar" style="display:none;">
+											<div class="progress">
+												<span class="text">0%</span>
+												<span class="percentage"></span>
+											</div><div class="info"></div>
+											<div class="btns">
+												<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
+
+
+
+							<input id="imgurl" name="imgurl" th:value="${advert.imgurl}" class="form-control" type="hidden">
+
+
+							<input id="gtmModified" name="gtmModified" th:value="${advert.gtmModified}" class="form-control" type="hidden">
+							<input id="created" name="created" th:value="${advert.created}" class="form-control" type="hidden">
+							<input id="modified" name="modified" th:value="${advert.modified}" class="form-control" type="hidden">
+							<input id="gtmCreate" name="gtmCreate" th:value="${advert.gtmCreate}" class="form-control"type="hidden">
+
 																					<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<button type="submit" class="btn btn-primary">提交</button>
@@ -88,7 +106,13 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
+<script>
+    var imgURLArray;
+</script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script type="text/javascript" src="/js/appjs/yzjj/advert/editableGallery.js"></script>
 	<script type="text/javascript" src="/js/appjs/yzjj/advert/edit.js">
 	</script>
+<script type="text/javascript" src="/js/webuploader.js"></script>
 </body>
 </html>

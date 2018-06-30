@@ -76,7 +76,7 @@ function load() {
 									title : '广告备注' 
 								},
 																{
-									field : 'stutus', 
+									field : 'status',
 									title : '广告状态' 
 								},
 																{

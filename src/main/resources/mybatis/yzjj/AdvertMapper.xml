@@ -4,18 +4,22 @@
 <mapper namespace="com.bootdo.yzjj.dao.AdvertDao">
 
 	<select id="get" resultType="com.bootdo.yzjj.domain.AdvertDO">
-		select `id`,`uuid`,`title`,`urls`,`remark`,`stutus`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert where id = #{value}
+		select `id`,`uuid`,`title`,`imgurl`,`remark`,`status`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert where id = #{value}
+	</select>
+
+    <select id="getAd" resultType="com.bootdo.yzjj.domain.AdvertDO">
+		select `id`,`uuid`,`title`,`imgurl`,`remark`,`status`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert where type = #{value} LIMIT 1
 	</select>
 
 	<select id="list" resultType="com.bootdo.yzjj.domain.AdvertDO">
-		select `id`,`uuid`,`title`,`urls`,`remark`,`stutus`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert
+		select `id`,`uuid`,`title`,`imgurl`,`remark`,`status`,`type`,`describe`,`created`,`modified`,`gtm_create`,`gtm_modified` from advert
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
 		  		  <if test="title != null and title != ''"> and title = #{title} </if>
-		  		  <if test="urls != null and urls != ''"> and urls = #{urls} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgurl = #{imgurl} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="describe != null and describe != ''"> and describe = #{describe} </if>
 		  		  <if test="created != null and created != ''"> and created = #{created} </if>
@@ -42,9 +46,9 @@
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
 		  		  <if test="title != null and title != ''"> and title = #{title} </if>
-		  		  <if test="urls != null and urls != ''"> and urls = #{urls} </if>
+		  		  <if test="imgurl != null and imgurl != ''"> and imgurl = #{imgurl} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="describe != null and describe != ''"> and describe = #{describe} </if>
 		  		  <if test="created != null and created != ''"> and created = #{created} </if>
@@ -55,13 +59,16 @@
 	</select>
 	 
 	<insert id="save" parameterType="com.bootdo.yzjj.domain.AdvertDO" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="uuid" resultType="String" order="BEFORE">
+			select  replace(uuid(),'-','')   from dual
+		</selectKey>
 		insert into advert
 		(
 			`uuid`, 
 			`title`, 
-			`urls`, 
+			`imgurl`,
 			`remark`, 
-			`stutus`, 
+			`status`,
 			`type`, 
 			`describe`, 
 			`created`, 
@@ -73,9 +80,9 @@
 		(
 			#{uuid}, 
 			#{title}, 
-			#{urls}, 
+			#{imgurl},
 			#{remark}, 
-			#{stutus}, 
+			#{status},
 			#{type}, 
 			#{describe}, 
 			#{created}, 
@@ -90,9 +97,9 @@
 		<set>
 			<if test="uuid != null">`uuid` = #{uuid}, </if>
 			<if test="title != null">`title` = #{title}, </if>
-			<if test="urls != null">`urls` = #{urls}, </if>
+			<if test="imgurl != null">`imgurl` = #{imgurl}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="stutus != null">`stutus` = #{stutus}, </if>
+			<if test="status != null">`status` = #{status}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="describe != null">`describe` = #{describe}, </if>
 			<if test="created != null">`created` = #{created}, </if>

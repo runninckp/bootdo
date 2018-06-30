@@ -2,6 +2,7 @@
 var prefix = "/yzjj/advert"
 $(function() {
 	load();
+   // connect();
 });
 
 function load() {
@@ -48,11 +49,11 @@ function load() {
 									checkbox : true
 								},
 																{
-									field : 'id', 
+									field : 'id',  visible : false,
 									title : '主键' 
 								},
 																{
-									field : 'uuid', 
+									field : 'uuid', visible : false,
 									title : 'uuid' 
 								},
 																{
@@ -60,15 +61,11 @@ function load() {
 									title : '广告标题' 
 								},
 																{
-									field : 'urls', 
+									field : 'imgurl', visible : false,
 									title : '广告图片' 
 								},
 																{
-									field : 'remark', 
-									title : '广告备注' 
-								},
-																{
-									field : 'stutus', 
+									field : 'status',visible : false,
 									title : '广告状态' 
 								},
 																{
@@ -79,20 +76,24 @@ function load() {
 									field : 'describe', 
 									title : '详细描述' 
 								},
+								{
+                                field : 'remark',
+                                title : '广告备注'
+							    },
 																{
-									field : 'created', 
+									field : 'created', visible : false,
 									title : '创建人id' 
 								},
 																{
-									field : 'modified', 
+									field : 'modified', visible : false,
 									title : '最近修改人id' 
 								},
 																{
-									field : 'gtmCreate', 
+									field : 'gtmCreate',visible : false,
 									title : '创建时间' 
 								},
 																{
-									field : 'gtmModified', 
+									field : 'gtmModified', visible : false,
 									title : '修改时间' 
 								},
 																{
@@ -195,3 +196,37 @@ function batchRemove() {
 
 	});
 }
+
+
+/*
+function connect() {
+    var sock = new SockJS("/webSocketServer");
+    var stomp = Stomp.over(sock);
+    stomp.connect({}, function(frame) {
+
+        /!**  订阅了/user/queue/notifications 发送的消息,这里雨在控制器的 convertAndSendToUser 定义的地址保持一致, 
+         *  这里多用了一个/user,并且这个user 是必须的,使用user 才会发送消息到指定的用户。 
+         *  *!/
+        console.log('Connected:' + frame);
+        stomp.subscribe("/topic/subscribeLatest", function (response) {
+            setMessageInnerHTML("ckp已成功订阅/topic/subscribeLatest");
+            var returnData = JSON.parse(response.body);
+            setMessageInnerHTML("/topic/subscribeLatest 你接收到的消息为:" + returnData.responseMessage);
+        });
+    });
+}
+
+
+//将消息显示在网页上
+function setMessageInnerHTML(innerHTML) {
+    document.getElementById('message').innerHTML += innerHTML + '<br/>';
+}*/
+//订阅消息
+/*
+function subscribe2() {
+    stomp.subscribe('/topic/subscribeLatest', function (response) {
+        setMessageInnerHTML("已成功订阅/topic/subscribeLatest");
+        var returnData = JSON.parse(response.body);
+        setMessageInnerHTML("/topic/subscribeLatest 你接收到的消息为:" + returnData.responseMessage);
+    });
+}*/

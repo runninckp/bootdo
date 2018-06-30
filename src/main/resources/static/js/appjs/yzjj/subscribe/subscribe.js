@@ -76,7 +76,7 @@ function load() {
 									title : '备注' 
 								},
 																{
-									field : 'stutus', 
+									field : 'status',
 									title : '状态' 
 								},
 																{

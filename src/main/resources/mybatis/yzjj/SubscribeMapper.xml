@@ -4,11 +4,16 @@
 <mapper namespace="com.bootdo.yzjj.dao.SubscribeDao">
 
 	<select id="get" resultType="com.bootdo.yzjj.domain.SubscribeDO">
-		select `created`,`modified`,`gtm_create`,`gtm_modified`,`id`,`uuid`,`remark`,`stutus`,`type`,`subtime`,`pushCode` from subscribe where id = #{value}
+		select `created`,`modified`,`gtm_create`,`gtm_modified`,`id`,`uuid`,`remark`,`status`,`type`,`subtime`,`openid`,`pushCode` from subscribe where id = #{value}
+	</select>
+
+
+	<select id="getByOpenid" resultType="com.bootdo.yzjj.domain.SubscribeDO">
+		select `created`,`modified`,`gtm_create`,`gtm_modified`,`id`,`uuid`,`remark`,`status`,`type`,`subtime`,`openid`,`pushCode` from subscribe where openid = #{openid}
 	</select>
 
 	<select id="list" resultType="com.bootdo.yzjj.domain.SubscribeDO">
-		select `created`,`modified`,`gtm_create`,`gtm_modified`,`id`,`uuid`,`remark`,`stutus`,`type`,`subtime`,`pushCode` from subscribe
+		select `created`,`modified`,`gtm_create`,`gtm_modified`,`id`,`uuid`,`remark`,`status`,`type`,`subtime`,`openid`,`pushCode` from subscribe
         <where>  
 		  		  <if test="created != null and created != ''"> and created = #{created} </if>
 		  		  <if test="modified != null and modified != ''"> and modified = #{modified} </if>
@@ -17,10 +22,11 @@
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="subtime != null and subtime != ''"> and subtime = #{subtime} </if>
 		  		  <if test="pushcode != null and pushcode != ''"> and pushCode = #{pushcode} </if>
+		  		  <if test="openid != null and openid != ''"> and openid = #{openid} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -45,14 +51,18 @@
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="uuid != null and uuid != ''"> and uuid = #{uuid} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  		  <if test="stutus != null and stutus != ''"> and stutus = #{stutus} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="subtime != null and subtime != ''"> and subtime = #{subtime} </if>
 		  		  <if test="pushcode != null and pushcode != ''"> and pushCode = #{pushcode} </if>
+		  		  <if test="openid != null and openid != ''"> and openid = #{openid} </if>
 		  		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.bootdo.yzjj.domain.SubscribeDO" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="uuid" resultType="String" order="BEFORE">
+			select  replace(uuid(),'-','')   from dual
+		</selectKey>
 		insert into subscribe
 		(
 			`created`, 
@@ -61,9 +71,10 @@
 			`gtm_modified`, 
 			`uuid`, 
 			`remark`, 
-			`stutus`, 
+			`status`,
 			`type`, 
 			`subtime`, 
+			`openid`,
 			`pushCode`
 		)
 		values
@@ -74,9 +85,10 @@
 			#{gtmModified}, 
 			#{uuid}, 
 			#{remark}, 
-			#{stutus}, 
+			#{status},
 			#{type}, 
 			#{subtime}, 
+			#{openid},
 			#{pushcode}
 		)
 	</insert>
@@ -90,10 +102,11 @@
 			<if test="gtmModified != null">`gtm_modified` = #{gtmModified}, </if>
 			<if test="uuid != null">`uuid` = #{uuid}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="stutus != null">`stutus` = #{stutus}, </if>
+			<if test="status != null">`status` = #{status}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="subtime != null">`subtime` = #{subtime}, </if>
 			<if test="pushcode != null">`pushCode` = #{pushcode}</if>
+			<if test="openid != null">`openid` = #{openid}</if>
 		</set>
 		where id = #{id}
 	</update>

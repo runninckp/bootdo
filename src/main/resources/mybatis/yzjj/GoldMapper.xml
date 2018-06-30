@@ -7,6 +7,12 @@
 		select `gold_buy`,`gold_sale`,`gold_high`,`gold_low`,`BJ_gold_sale`,`BJ_gold_buy`,`BJ_gold_high`,`BJ_gold_low`,`BY_gold_sale`,`BY_gold_buy`,`BY_gold_high`,`BY_gold_low`,`HK_gold_sale`,`HK_gold_buy`,`HK_gold_high`,`HK_gold_low`,`London_gold_sale`,`London_gold_buy`,`London_gold_high`,`London_gold_low`,`time` from gold where time = #{value}
 	</select>
 
+	<select id="getLatest" resultType="com.bootdo.yzjj.domain.GoldDO">
+		select `gold_buy`,`gold_sale`,`gold_high`,`gold_low`,`BJ_gold_sale`,`BJ_gold_buy`,`BJ_gold_high`,`BJ_gold_low`,`BY_gold_sale`,`BY_gold_buy`,`BY_gold_high`,`BY_gold_low`,`HK_gold_sale`,`HK_gold_buy`,`HK_gold_high`,`HK_gold_low`,`London_gold_sale`,`London_gold_buy`,`London_gold_high`,`London_gold_low`,`time`
+		from gold
+		where time = (SELECT MAX(time) FROM `gold`)
+	</select>
+
 	<select id="list" resultType="com.bootdo.yzjj.domain.GoldDO">
 		select `gold_buy`,`gold_sale`,`gold_high`,`gold_low`,`BJ_gold_sale`,`BJ_gold_buy`,`BJ_gold_high`,`BJ_gold_low`,`BY_gold_sale`,`BY_gold_buy`,`BY_gold_high`,`BY_gold_low`,`HK_gold_sale`,`HK_gold_buy`,`HK_gold_high`,`HK_gold_low`,`London_gold_sale`,`London_gold_buy`,`London_gold_high`,`London_gold_low`,`time` from gold
         <where>  

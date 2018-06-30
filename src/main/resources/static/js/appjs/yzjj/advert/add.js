@@ -8,6 +8,8 @@ $.validator.setDefaults({
 	}
 });
 function save() {
+    var result1 = $("#imgurl").val();
+    alert("result1 = " + result1);
 	$.ajax({
 		cache : true,
 		type : "POST",
