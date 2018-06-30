@@ -1,19 +1,22 @@
-package com.github.binarywang.demo.wechat.controller;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+package com.bootdo.yzjj.controller;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import com.github.binarywang.demo.wechat.utils.JsonUtils;
+import com.bootdo.common.redis.JedisUtil;
+import com.bootdo.common.utils.JSONUtils;
+import com.bootdo.common.utils.R;
+import com.google.inject.Inject;
 import me.chanjar.weixin.common.exception.WxErrorException;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 /**
  * 微信小程序用户接口
@@ -25,16 +28,19 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 public class WxMaUserController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
+    @Inject
     private WxMaService wxService;
+    @Autowired
+    private JedisUtil jedisUtil;
 
     /**
      * 登陆接口
      */
-    @GetMapping("/login")
-    public String login(String code) {
+    @ResponseBody
+    @PostMapping("/login")
+    public R login(String code) {
         if (StringUtils.isBlank(code)) {
-            return "empty jscode";
+            return R.error("empty jscode");
         }
 
         try {
@@ -42,10 +48,16 @@ public class WxMaUserController {
             this.logger.info(session.getSessionKey());
             this.logger.info(session.getOpenid());
             //TODO 可以增加自己的逻辑，关联业务相关数据
-            return JsonUtils.toJson(session);
+            //1：需插入redis，2：加密返回
+            String threeSessionKey= create3rdSession(session.getOpenid(),session.getSessionKey(),3600*24);
+            HashMap map = new HashMap();
+            HashMap threeSessionmap = new HashMap();
+            threeSessionmap.put("threeSessionKey",threeSessionKey);
+            map.put("data",threeSessionmap);
+            return R.ok(map);
         } catch (WxErrorException e) {
             this.logger.error(e.getMessage(), e);
-            return e.toString();
+            return R.error(e.toString());
         }
     }
 
@@ -64,7 +76,7 @@ public class WxMaUserController {
         // 解密用户信息
         WxMaUserInfo userInfo = this.wxService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
 
-        return JsonUtils.toJson(userInfo);
+        return JSONUtils.beanToJson(userInfo);
     }
 
     /**
@@ -82,7 +94,35 @@ public class WxMaUserController {
         // 解密
         WxMaPhoneNumberInfo phoneNoInfo = this.wxService.getUserService().getPhoneNoInfo(sessionKey, encryptedData, iv);
 
-        return JsonUtils.toJson(phoneNoInfo);
+        return JSONUtils.beanToJson(phoneNoInfo);
+    }
+
+
+    /**
+     * 缓存微信openId和session_key
+     * @param wxOpenId		微信用户唯一标识
+     * @param wxSessionKey	微信服务器会话密钥
+     * @param expires		会话有效期, 以秒为单位, 例如2592000代表会话有效期为30天
+     * @return
+     */
+    private String create3rdSession(String wxOpenId, String wxSessionKey, int expires){
+        String thirdSessionKey = RandomStringUtils.randomAlphanumeric(64);
+        StringBuffer sb = new StringBuffer();
+        sb.append(wxSessionKey).append("#").append(wxOpenId);
+        jedisUtil.set(thirdSessionKey,  sb.toString(),expires);
+        return thirdSessionKey;
+    }
+
+    /**
+     * 通过thirdSessionKey 获取缓存获取openid
+     */
+    private String getOpenidByThirdSessionKey(String thirdSessionKey) throws Exception{
+        String sb = jedisUtil.getByKey(thirdSessionKey);
+        if (StringUtils.isNotEmpty(sb)){
+            String[] sbArray = sb.split("#");
+            return  sbArray[1];
+        }
+        throw new Exception("请重新登陆！");
     }
 
 }

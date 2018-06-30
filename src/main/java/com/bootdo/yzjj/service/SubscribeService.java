@@ -16,6 +16,8 @@ public interface SubscribeService {
 	
 	SubscribeDO get(Long id);
 	
+	List<SubscribeDO> getByOpenid(String openid);
+
 	List<SubscribeDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);

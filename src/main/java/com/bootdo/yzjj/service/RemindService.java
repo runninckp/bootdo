@@ -15,12 +15,16 @@ import java.util.Map;
 public interface RemindService {
 	
 	RemindDO get(Long id);
+
+	List<RemindDO> getByOpenid(String openid);
 	
 	List<RemindDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
 	int save(RemindDO remind);
+
+
 	
 	int update(RemindDO remind);
 	

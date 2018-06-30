@@ -21,6 +21,11 @@ public class RemindServiceImpl implements RemindService {
 	public RemindDO get(Long id){
 		return remindDao.get(id);
 	}
+
+	@Override
+	public List<RemindDO> getByOpenid(String openid){
+		return remindDao.getByOpenid(openid);
+	}
 	
 	@Override
 	public List<RemindDO> list(Map<String, Object> map){
@@ -36,6 +41,8 @@ public class RemindServiceImpl implements RemindService {
 	public int save(RemindDO remind){
 		return remindDao.save(remind);
 	}
+
+
 	
 	@Override
 	public int update(RemindDO remind){

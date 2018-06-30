@@ -17,10 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RemindDao {
 
 	RemindDO get(Long id);
+
+	List<RemindDO> getByOpenid(String openid);
 	
-	List<RemindDO> list(Map<String,Object> map);
+	List<RemindDO> list(Map<String, Object> map);
 	
-	int count(Map<String,Object> map);
+	int count(Map<String, Object> map);
 	
 	int save(RemindDO remind);
 	

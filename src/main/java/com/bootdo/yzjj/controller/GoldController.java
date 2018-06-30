@@ -1,10 +1,8 @@
 package com.bootdo.yzjj.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.bootdo.common.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -17,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootdo.yzjj.domain.AdvertDO;
-import com.bootdo.yzjj.service.AdvertService;
+import com.bootdo.yzjj.domain.GoldDO;
+import com.bootdo.yzjj.service.GoldService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
@@ -28,45 +26,45 @@ import com.bootdo.common.utils.R;
  * 
  * @author ckp
  * @email 756495742@qq.com
- * @date 2018-06-09 16:11:02
+ * @date 2018-06-10 12:08:46
  */
  
 @Controller
-@RequestMapping("/yzjj/advert")
-public class AdvertController  extends BaseController {
+@RequestMapping("/yzjj/gold")
+public class GoldController {
 	@Autowired
-	private AdvertService advertService;
+	private GoldService goldService;
 	
 	@GetMapping()
-	@RequiresPermissions("yzjj:advert:advert")
-	String Advert(){
-	    return "yzjj/advert/advert";
+	@RequiresPermissions("yzjj:gold:gold")
+	String Gold(){
+	    return "yzjj/gold/gold";
 	}
 	
 	@ResponseBody
 	@GetMapping("/list")
-	@RequiresPermissions("yzjj:advert:advert")
+	@RequiresPermissions("yzjj:gold:gold")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<AdvertDO> advertList = advertService.list(query);
-		int total = advertService.count(query);
-		PageUtils pageUtils = new PageUtils(advertList, total);
+		List<GoldDO> goldList = goldService.list(query);
+		int total = goldService.count(query);
+		PageUtils pageUtils = new PageUtils(goldList, total);
 		return pageUtils;
 	}
 	
 	@GetMapping("/add")
-	@RequiresPermissions("yzjj:advert:add")
+	@RequiresPermissions("yzjj:gold:add")
 	String add(){
-	    return "yzjj/advert/add";
+	    return "yzjj/gold/add";
 	}
 
-	@GetMapping("/edit/{id}")
-	@RequiresPermissions("yzjj:advert:edit")
-	String edit(@PathVariable("id") Long id,Model model){
-		AdvertDO advert = advertService.get(id);
-		model.addAttribute("advert", advert);
-	    return "yzjj/advert/edit";
+	@GetMapping("/edit/{time}")
+	@RequiresPermissions("yzjj:gold:edit")
+	String edit(@PathVariable("time") String time,Model model){
+		GoldDO gold = goldService.get(time);
+		model.addAttribute("gold", gold);
+	    return "yzjj/gold/edit";
 	}
 	
 	/**
@@ -74,14 +72,9 @@ public class AdvertController  extends BaseController {
 	 */
 	@ResponseBody
 	@PostMapping("/save")
-	@RequiresPermissions("yzjj:advert:add")
-	public R save( AdvertDO advert){
-		advert.setGtmCreate(new Date());
-		advert.setGtmModified(new Date());
-		advert.setCreated(getUserId());
-		advert.setModified(getUserId());
-		advert.setStatus("1");
-		if(advertService.save(advert)>0){
+	@RequiresPermissions("yzjj:gold:add")
+	public R save( GoldDO gold){
+		if(goldService.save(gold)>0){
 			return R.ok();
 		}
 		return R.error();
@@ -91,9 +84,9 @@ public class AdvertController  extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("yzjj:advert:edit")
-	public R update( AdvertDO advert){
-		advertService.update(advert);
+	@RequiresPermissions("yzjj:gold:edit")
+	public R update( GoldDO gold){
+		goldService.update(gold);
 		return R.ok();
 	}
 	
@@ -102,9 +95,9 @@ public class AdvertController  extends BaseController {
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
-	@RequiresPermissions("yzjj:advert:remove")
-	public R remove( Long id){
-		if(advertService.remove(id)>0){
+	@RequiresPermissions("yzjj:gold:remove")
+	public R remove( String time){
+		if(goldService.remove(time)>0){
 		return R.ok();
 		}
 		return R.error();
@@ -115,9 +108,9 @@ public class AdvertController  extends BaseController {
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
-	@RequiresPermissions("yzjj:advert:batchRemove")
-	public R remove(@RequestParam("ids[]") Long[] ids){
-		advertService.batchRemove(ids);
+	@RequiresPermissions("yzjj:gold:batchRemove")
+	public R remove(@RequestParam("ids[]") String[] times){
+		goldService.batchRemove(times);
 		return R.ok();
 	}
 	

@@ -30,13 +30,23 @@ public class SubscribeDO implements Serializable {
 	//备注
 	private String remark;
 	//状态
-	private String stutus;
+	private String status;
 	//类型
 	private String type;
 	//订阅时间
 	private String subtime;
 	//推送码
 	private String pushcode;
+	//openid
+	private String openid;
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 
 	/**
 	 * 设置：创建人id
@@ -125,14 +135,14 @@ public class SubscribeDO implements Serializable {
 	/**
 	 * 设置：状态
 	 */
-	public void setStutus(String stutus) {
-		this.stutus = stutus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	/**
 	 * 获取：状态
 	 */
-	public String getStutus() {
-		return stutus;
+	public String getStatus() {
+		return status;
 	}
 	/**
 	 * 设置：类型

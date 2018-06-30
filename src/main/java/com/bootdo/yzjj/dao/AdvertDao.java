@@ -17,10 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AdvertDao {
 
 	AdvertDO get(Long id);
+
+	AdvertDO getAd(String type);
 	
-	List<AdvertDO> list(Map<String,Object> map);
+	List<AdvertDO> list(Map<String, Object> map);
 	
-	int count(Map<String,Object> map);
+	int count(Map<String, Object> map);
 	
 	int save(AdvertDO advert);
 	

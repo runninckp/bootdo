@@ -18,9 +18,11 @@ public interface SubscribeDao {
 
 	SubscribeDO get(Long id);
 	
-	List<SubscribeDO> list(Map<String,Object> map);
+	List<SubscribeDO> getByOpenid(String openid);
+
+	List<SubscribeDO> list(Map<String, Object> map);
 	
-	int count(Map<String,Object> map);
+	int count(Map<String, Object> map);
 	
 	int save(SubscribeDO subscribe);
 	

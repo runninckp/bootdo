@@ -22,11 +22,11 @@ public class AdvertDO implements Serializable {
 	//广告标题
 	private String title;
 	//广告图片
-	private String urls;
+	private String imgurl;
 	//广告备注
 	private String remark;
 	//广告状态
-	private String stutus;
+	private String status;
 	//类型
 	private String type;
 	//详细描述
@@ -76,19 +76,17 @@ public class AdvertDO implements Serializable {
 	public String getTitle() {
 		return title;
 	}
-	/**
-	 * 设置：广告图片
-	 */
-	public void setUrls(String urls) {
-		this.urls = urls;
+
+	public String getImgurl() {
+		return imgurl;
 	}
-	/**
-	 * 获取：广告图片
-	 */
-	public String getUrls() {
-		return urls;
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
+
 	/**
+
 	 * 设置：广告备注
 	 */
 	public void setRemark(String remark) {
@@ -103,14 +101,14 @@ public class AdvertDO implements Serializable {
 	/**
 	 * 设置：广告状态
 	 */
-	public void setStutus(String stutus) {
-		this.stutus = stutus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	/**
 	 * 获取：广告状态
 	 */
-	public String getStutus() {
-		return stutus;
+	public String getStatus() {
+		return status;
 	}
 	/**
 	 * 设置：类型

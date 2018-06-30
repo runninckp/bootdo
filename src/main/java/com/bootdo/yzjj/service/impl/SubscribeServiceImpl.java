@@ -21,6 +21,11 @@ public class SubscribeServiceImpl implements SubscribeService {
 	public SubscribeDO get(Long id){
 		return subscribeDao.get(id);
 	}
+
+	@Override
+	public List<SubscribeDO> getByOpenid(String id){
+		return subscribeDao.getByOpenid(id);
+	}
 	
 	@Override
 	public List<SubscribeDO> list(Map<String, Object> map){

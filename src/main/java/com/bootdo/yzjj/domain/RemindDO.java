@@ -27,18 +27,48 @@ public class RemindDO implements Serializable {
 	private Long id;
 	//uuid
 	private String uuid;
-	//广告备注
+	//备注
 	private String remark;
-	//广告状态
-	private String stutus;
+	//状态
+	private String status;
 	//订阅类型
 	private String type;
 	//跌破
 	private String down;
 	//涨超
 	private String up;
+	//价格变化（1涨，-1跌，0相等）
+	private String change;
+	//价格
+	private String price;
 	//推送码
 	private String pushcode;
+	//推送码
+	private String openid;
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+
+	public String getChange() {
+		return change;
+	}
+
+	public void setChange(String change) {
+		this.change = change;
+	}
 
 	/**
 	 * 设置：创建人id
@@ -127,14 +157,14 @@ public class RemindDO implements Serializable {
 	/**
 	 * 设置：广告状态
 	 */
-	public void setStutus(String stutus) {
-		this.stutus = stutus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	/**
 	 * 获取：广告状态
 	 */
-	public String getStutus() {
-		return stutus;
+	public String getStatus() {
+		return status;
 	}
 	/**
 	 * 设置：订阅类型

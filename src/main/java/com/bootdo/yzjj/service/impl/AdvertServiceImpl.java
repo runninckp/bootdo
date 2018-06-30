@@ -21,7 +21,12 @@ public class AdvertServiceImpl implements AdvertService {
 	public AdvertDO get(Long id){
 		return advertDao.get(id);
 	}
-	
+
+	@Override
+	public AdvertDO getAd(String type){
+		return advertDao.getAd(type);
+	}
+
 	@Override
 	public List<AdvertDO> list(Map<String, Object> map){
 		return advertDao.list(map);

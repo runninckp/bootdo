@@ -15,6 +15,8 @@ import java.util.Map;
 public interface AdvertService {
 	
 	AdvertDO get(Long id);
+
+	AdvertDO getAd(String type);
 	
 	List<AdvertDO> list(Map<String, Object> map);
 	
